@@ -15,7 +15,7 @@
 // Task
 // What does the following code do?
 // get html elements with viz tag 
-const viz = document.body.querySelector(".viz");
+const viz = document.body.querySelector("viz");
 const button = document.body.querySelector("#button");
 
 //console.log(viz, viz.children);
@@ -51,3 +51,5 @@ drawIrisData();
 // Task
 // Modify the code above to visualize the Iris dataset in the preview of index.html.
 // Feel free to add additional CSS properties in index.html, or using JavaScript, as you see fit.
+
+//testing change for github
