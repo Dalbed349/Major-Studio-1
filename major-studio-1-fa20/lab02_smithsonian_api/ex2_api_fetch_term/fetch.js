@@ -2,7 +2,7 @@
 // check API documentation for terms here: http://edan.si.edu/openaccess/apidocs/#api-search-terms
 
 // put your API key here;
-const apiKey = "";  
+const apiKey = "vowXEL5s4MRnExeaZckHpnUfHGUemfIqudmkMScK";  
 
 // Access to terms by term category (I.e. online_media_type > Images)
 const termBaseURL = "https://api.si.edu/openaccess/api/v1.0/terms/";
@@ -29,7 +29,13 @@ Task: Play around with the different categories listed here:
 http://edan.si.edu/openaccess/apidocs/#api-search-terms
 Questions: 
 - What other media types are available? 
+  - object type has 104654 terms. 
+  
 - How many cultures are represented?
-- What acronyms for museums are there?
+- "culture"--4267
 
+- What acronyms for museums are there?
+- "unit_code" -- 34 categories array length 34  AAA/AAA TH/ ACM/ CFCHFOLKLIFE etc
+
+- "data_source" -- 34 names of museums. 
 */
