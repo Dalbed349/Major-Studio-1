@@ -29,6 +29,7 @@ Task: Play around with the different categories listed here:
 http://edan.si.edu/openaccess/apidocs/#api-search-terms
 Questions: 
 - What other media types are available? 
+  -"13 online media types"
   - object type has 104654 terms. 
   
 - How many cultures are represented?

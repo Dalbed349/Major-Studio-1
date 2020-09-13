@@ -2,13 +2,13 @@
 // check API documentation for search here: http://edan.si.edu/openaccess/apidocs/#api-search-search
 
 // put your API key here;
-const apiKey = "";  
+const apiKey = "vowXEL5s4MRnExeaZckHpnUfHGUemfIqudmkMScK";  
 
 // search base URL
 const searchBaseURL = "https://api.si.edu/openaccess/api/v1.0/search";
 
 // Constructing the search query
-const search =  `mask AND unit_code:"FSG"` + "&start=" + 0 + "&rows=" + 81;
+const search =  `sculpture AND unit_code:"FSG"` + "&start=" + 0 + "&rows=" + 683;
 
 
 // search: fetches an array of terms based on term category
