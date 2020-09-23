@@ -1,0 +1,184 @@
+// Smithsonian API example code
+// check API documentation for search here: http://edan.si.edu/openaccess/apidocs/#api-search-search
+// Using this data set https://collections.si.edu/search/results.htm?q=Flowers&view=grid&fq=data_source%3A%22Cooper+Hewitt%2C+Smithsonian+Design+Museum%22&fq=online_media_type%3A%22Images%22&media.CC0=true&fq=object_type:%22Embroidery+%28visual+works%29%22
+
+// put your API key here;
+const apiKey = "vowXEL5s4MRnExeaZckHpnUfHGUemfIqudmkMScK";  
+
+// search base URL
+const searchBaseURL = "https://api.si.edu/openaccess/api/v1.0/search";
+
+// constructing the initial search query
+// const search =  'mask AND unit_code:"FSG"';
+const search =  `Sculpture AND unit_code:"FSG"`;
+
+
+// array that we will write into
+let myArray = [];
+
+// string that will hold the stringified JSON data
+let jsonString = '';
+
+// search: fetches an array of terms based on term category
+function fetchSearchData(searchTerm) {
+    let url = searchBaseURL + "?api_key=" + apiKey + "&q=" + searchTerm;
+    console.log(url);
+    window
+    .fetch(url)
+    .then(res => res.json())
+    .then(data => {
+      console.log(data)
+
+      // constructing second search query to get all the rows of data
+      // The max here is 1000 rows
+      let searchAllURL = url + `&start=0&rows=${data.response.rowCount}`;
+      // let searchAllURL = url + `&start=0&rows=40`;
+      
+      console.log(searchAllURL);
+      fetchAllData(searchAllURL);
+    })
+    .catch(error => {
+      console.log(error);
+    })
+}
+
+// fetching all the data listed under our search and pushing them all into our custom array
+function fetchAllData(url) {
+  console.log(url)
+  window
+  .fetch(url)
+  .then(res => res.json())
+  .then(data => {
+    console.log(data)
+
+    data.response.rows.forEach(function(n) {
+      addObject(n);
+    });
+    jsonString += JSON.stringify(myArray);
+    // console.log(myArray.toString());/////THE MAIN BRAIN PUSH FUNCTIONS HERE/////////
+    countDate(myArray)
+    count(myArray)
+    console.log(DateFrequencyCount)
+    console.log(Object.keys(frequencyCount));
+    
+  })
+  .catch(error => {
+    console.log(error)
+  })
+
+}
+
+// create your own array with just the data you need
+function addObject(objectData) {
+  var currentID = objectData.id;
+  var currentTitle = objectData.title;
+  var objectLink = objectData.content.descriptiveNonRepeating.record_link;
+  var Material = objectData.content.freetext.physicalDescription[0].content;
+  var Dateid = objectData.content.freetext.date[0].content;
+  var object_type = objectData.content.indexedStructured.object_type[0];
+  var index = myArray.length;
+  
+  myArray[index] = {};
+  myArray[index]["title"] = currentTitle;
+  myArray[index]["id"] = currentID;
+  myArray[index]["link"] = objectLink;
+  myArray[index]["object_type"] = object_type;
+  myArray[index]["material"] = Material;
+  myArray[index]["date"] = Dateid;
+  console.log("object at index", index, myArray[index]);
+}
+// create our counter object
+
+let frequencyCount = {};
+function count(myArray) {
+  // iterating through our data
+  myArray.forEach(myArray=> {
+    // javascript objects have key: value pairs
+    // we're going to set the key to be the material type
+    // and value of that key to be the counter
+    // ex) bronze: 1231
+    // getting all the'keys'in our frequency counter
+    // at first there will be no keys
+    let keys = Object.keys(frequencyCount)
+    // checking if the current material of our data is in keys
+    // if not, jump to the else statement and create a new key and set the counter to 1
+    // if there is a key that corresponds to our material, add 1 to our counter
+    if(keys.includes(myArray.material)) {
+      frequencyCount[myArray.material] += 1;
+    } else {
+      frequencyCount[myArray.material] = 1;
+    }
+  });
+  // log to the console to see that it works!
+
+  console.log(frequencyCount);
+}
+
+count(myArray);
+
+fetchSearchData(search);
+
+let DateFrequencyCount = [];
+
+function countDate(myArray) {
+  // iterating through our data
+  myArray.forEach(myArray=> {
+    // javascript objects have key: value pairs
+    // we're going to set the key to be the material type
+    // and value of that key to be the counter
+    // ex) bronze: 1231
+    // getting all the'keys'in our frequency counter
+    // at first there will be no keys
+    let keys1 = Object.keys(DateFrequencyCount)
+    // checking if the current material of our data is in keys
+    // if not, jump to the else statement and create a new key and set the counter to 1
+    // if there is a key that corresponds to our material, add 1 to our counter
+    if(keys1.includes(myArray.date)) {
+      DateFrequencyCount[myArray.date] += 1;
+    } else {
+      DateFrequencyCount[myArray.date] = 1;
+    }
+  });
+  // log to the console to see that it works!
+
+  console.log(DateFrequencyCount.length);
+}
+countDate(myArray);
+// console.log(myArray);
+// console.log(sculptures);
+
+
+//---------------------------UNIT CODES------------------------------
+// ACAH: Archives Center, National Museum of American History
+// ACM: Anacostia Community Museum
+// CFCHFOLKLIFE: Smithsonian Center for Folklife and Cultural Heritage
+// CHNDM: Cooper-Hewitt, National Design Museum
+// FBR: Smithsonian Field Book Project
+// FSA: Freer Gallery of Art and Arthur M. Sackler Gallery Archives
+// FSG: Freer Gallery of Art and Arthur M. Sackler Gallery
+// HAC: Smithsonian Gardens
+// HMSG: Hirshhorn Museum and Sculpture Garden
+// HSFA: Human Studies Film Archives
+// NAA: National Anthropological Archives
+// NASM: National Air and Space Museum
+// NMAAHC: National Museum of African American History and Culture
+// NMAfA: Smithsonian National Museum of African Art
+// NMAH: Smithsonian National Museum of American History
+// NMAI: National Museum of the American Indian
+// NMNHANTHRO: NMNH - Anthropology Dept.
+// NMNHBIRDS: NMNH - Vertebrate Zoology - Birds Division
+// NMNHBOTANY: NMNH - Botany Dept.
+// NMNHEDUCATION: NMNH - Education & Outreach
+// NMNHENTO: NMNH - Entomology Dept.
+// NMNHFISHES: NMNH - Vertebrate Zoology - Fishes Division
+// NMNHHERPS: NMNH - Vertebrate Zoology - Herpetology Division
+// NMNHINV: NMNH - Invertebrate Zoology Dept.
+// NMNHMAMMALS: NMNH - Vertebrate Zoology - Mammals Division
+// NMNHMINSCI: NMNH - Mineral Sciences Dept.
+// NMNHPALEO: NMNH - Paleobiology Dept.
+// NPG: National Portrait Gallery
+// NPM: National Postal Museum
+// SAAM: Smithsonian American Art Museum
+// SI: Smithsonian Institution, Digitization Program Office
+// SIA: Smithsonian Institution Archives
+// SIL: Smithsonian Libraries
