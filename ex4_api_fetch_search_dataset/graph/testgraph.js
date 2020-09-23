@@ -35,7 +35,7 @@ function analyzeData(){
     // if not create a new entry for that place name
       if(!match){
         allMaterials.push({
-          name: material,
+          name:materialNow,
           count:1
         });
       }
@@ -92,12 +92,6 @@ text("At the Cooper Hewitt Collection", margin,margin-60);
 
 
 
-/*
-Tasks:
-1. Download a different data set and create a graph in a similar fashion (hopefully one that helps with your project?)
-2. Imagine another graphical representation for this data
-
-*/
 
 
 
